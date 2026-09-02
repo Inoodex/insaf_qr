@@ -61,21 +61,21 @@ class AccountVerification extends Model
     }
 
     /**
-     * Formatted Balance Accessors
+     * Formatted Balance Accessors (e.g. 150000.00)
      */
     public function getFormattedCertificateBalanceAttribute(): string
     {
-        return number_format((float)$this->certificate_balance, 2);
+        return number_format((float)$this->certificate_balance, 2, '.', '');
     }
 
     public function getFormattedOpeningBalanceAttribute(): string
     {
-        return number_format((float)$this->opening_balance, 2);
+        return number_format((float)$this->opening_balance, 2, '.', '');
     }
 
     public function getFormattedClosingBalanceAttribute(): string
     {
-        return number_format((float)$this->closing_balance, 2);
+        return number_format((float)$this->closing_balance, 2, '.', '');
     }
 
     public function getFormattedGenerationDateAttribute(): string

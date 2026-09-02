@@ -347,9 +347,8 @@
     function formatBalanceInput(e) {
         let val = e.target.value.replace(/,/g, '').trim();
         if (val !== '' && !isNaN(val)) {
-            let parts = val.split('.');
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            e.target.value = parts.join('.');
+            let num = parseFloat(val);
+            e.target.value = num.toFixed(2);
         }
     }
 
