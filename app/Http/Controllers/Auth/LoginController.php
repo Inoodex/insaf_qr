@@ -14,7 +14,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect()->route('admin.verifications.certificate');
+            return redirect()->route('admin.verifications.index');
         }
 
         return view('auth.login');
@@ -35,7 +35,7 @@ class LoginController extends Controller
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('admin.verifications.certificate'));
+            return redirect()->intended(route('admin.verifications.index'));
         }
 
         return back()->withErrors([

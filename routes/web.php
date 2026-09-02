@@ -8,8 +8,11 @@ use App\Http\Controllers\PublicVerificationController;
 
 // Guest Authentication Routes
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
+    Route::get('/admin/authentication/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/admin/authentication/login', [LoginController::class, 'login']);
+    
+    // Alias redirect
+    Route::get('/login', fn () => redirect()->route('login'));
 });
 
 // Authenticated Logout Route
