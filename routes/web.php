@@ -6,21 +6,18 @@ use App\Http\Controllers\Admin\VerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\PublicVerificationController;
 
-// Guest Authentication Routes
+// Guest Authentication Routes (Hidden / Direct URL only)
 Route::middleware('guest')->group(function () {
     Route::get('/admin/authentication/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/admin/authentication/login', [LoginController::class, 'login']);
-    
-    // Alias redirect
-    Route::get('/login', fn () => redirect()->route('login'));
 });
 
 // Authenticated Logout Route
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->middleware('auth');
 
-// Public Root -> Redirects to Dashboard
+// Public Root -> 404 Not Found (Protects login path from scanners)
 Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+    abort(404);
 })->name('home');
 
 // Public Online QR Verification Endpoints
