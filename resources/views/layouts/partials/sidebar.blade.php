@@ -6,8 +6,8 @@
                 <i class="bi bi-qr-code"></i>
             </div>
             <div class="d-flex flex-column">
-                <span class="brand-text text-white">Insaf<span class="ms-1" style="color: #818cf8;">Verification</span></span>
-                <span class="text-white-50" style="font-size: 0.7rem; letter-spacing: 0.5px;">QR GENERATOR</span>
+                <span class="text-white">Student Verification</span>
+                <span class="text-white-50" style="font-size: 0.7rem; letter-spacing: 0.5px;">QR Code</span>
             </div>
         </a>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin Login | Insaf QR Code</title>
+    <title>Admin Login</title>
 
     <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,7 +80,7 @@
         <div class="brand-icon-box">
             <i class="bi bi-qr-code"></i>
         </div>
-        <h4 class="fw-bold mb-1 text-dark">Insaf <span class="text-primary">Verification</span></h4>
+        <h4 class="fw-bold mb-1 text-dark">QR Code <span class="text-primary">Verification</span></h4>
         <!-- <p class="text-muted small mb-0">Bank Verification System Login</p> -->
     </div>
 
@@ -145,7 +145,7 @@
 
     <!-- Footer -->
     <div class="p-3 bg-light text-center border-top text-muted small">
-        &copy; {{ date('Y') }} Inoodex. All rights reserved.
+        &copy; {{ date('Y') }} | All rights reserved.
     </div>
 
 </div>

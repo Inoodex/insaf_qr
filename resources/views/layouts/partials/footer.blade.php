@@ -4,7 +4,7 @@
             &copy; {{ date('Y') }}
         </div>
         <div>
-            <a href="#" class="text-decoration-none fw-semibold text-primary">Insaf QR</a>
+            <a href="#" class="text-decoration-none fw-semibold text-primary">QR Code Verification</a>
             <span class="text-muted small m-0 text-end">| All rights reserved.</span>
         </div>
     </div>
