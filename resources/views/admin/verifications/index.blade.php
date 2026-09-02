@@ -62,7 +62,10 @@
                                         <label class="form-label fw-bold small text-muted text-uppercase">Account Name <span class="text-danger">*</span></label>
                                         <div class="input-group input-group-md">
                                             <span class="input-group-text"><i class="bi bi-person"></i></span>
-                                            <input type="text" name="account_name" id="inputAccountName" class="form-control fw-bold" value="{{ old('account_name', $editVerification->account_name ?? ($activeVerification->account_name ?? '')) }}" required>
+                                            <input type="text" name="account_name" id="inputAccountName" class="form-control fw-bold @error('account_name') is-invalid @enderror" value="{{ old('account_name', $editVerification->account_name ?? ($activeVerification->account_name ?? '')) }}" required>
+                                            @error('account_name')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -70,7 +73,10 @@
                                         <label class="form-label fw-bold small text-muted text-uppercase">Report Generation Date <span class="text-danger">*</span></label>
                                         <div class="input-group input-group-md">
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                            <input type="date" name="report_generation_date" id="inputGenDate" class="form-control fw-bold" value="{{ old('report_generation_date', isset($editVerification) ? $editVerification->report_generation_date->format('Y-m-d') : (isset($activeVerification) ? $activeVerification->report_generation_date->format('Y-m-d') : date('Y-m-d'))) }}" required>
+                                            <input type="date" name="report_generation_date" id="inputGenDate" class="form-control fw-bold @error('report_generation_date') is-invalid @enderror" value="{{ old('report_generation_date', isset($editVerification) ? $editVerification->report_generation_date->format('Y-m-d') : (isset($activeVerification) ? $activeVerification->report_generation_date->format('Y-m-d') : date('Y-m-d'))) }}" required>
+                                            @error('report_generation_date')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +95,10 @@
                                             <label class="form-label fw-bold small text-muted text-uppercase">Report Date Balance <span class="text-danger">*</span></label>
                                             <div class="input-group input-group-md">
                                                 <span class="input-group-text fw-bold text-primary">BDT</span>
-                                                <input type="text" name="certificate_balance" id="inputCertBal" class="form-control font-monospace fw-bold" value="{{ old('certificate_balance', $editVerification ? $editVerification->formatted_certificate_balance : ($activeVerification ? $activeVerification->formatted_certificate_balance : '')) }}" required>
+                                                <input type="text" inputmode="decimal" name="certificate_balance" id="inputCertBal" class="form-control font-monospace fw-bold @error('certificate_balance') is-invalid @enderror" value="{{ old('certificate_balance', $editVerification ? $editVerification->formatted_certificate_balance : ($activeVerification ? $activeVerification->formatted_certificate_balance : '')) }}" required>
+                                                @error('certificate_balance')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                             <small class="text-muted mt-1 d-block">Shown on Certificate verification</small>
                                         </div>
@@ -106,14 +115,20 @@
                                             <label class="form-label fw-bold small text-muted text-uppercase">Opening Balance <span class="text-danger">*</span></label>
                                             <div class="input-group input-group-md">
                                                 <span class="input-group-text fw-bold text-success">BDT</span>
-                                                <input type="text" name="opening_balance" id="inputOpenBal" class="form-control font-monospace fw-bold" value="{{ old('opening_balance', $editVerification ? $editVerification->formatted_opening_balance : ($activeVerification ? $activeVerification->formatted_opening_balance : '')) }}" required>
+                                                <input type="text" inputmode="decimal" name="opening_balance" id="inputOpenBal" class="form-control font-monospace fw-bold @error('opening_balance') is-invalid @enderror" value="{{ old('opening_balance', $editVerification ? $editVerification->formatted_opening_balance : ($activeVerification ? $activeVerification->formatted_opening_balance : '')) }}" required>
+                                                @error('opening_balance')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div>
                                             <label class="form-label fw-bold small text-muted text-uppercase">Closing Balance <span class="text-danger">*</span></label>
                                             <div class="input-group input-group-md">
                                                 <span class="input-group-text fw-bold text-success">BDT</span>
-                                                <input type="text" name="closing_balance" id="inputCloseBal" class="form-control font-monospace fw-bold" value="{{ old('closing_balance', $editVerification ? $editVerification->formatted_closing_balance : ($activeVerification ? $activeVerification->formatted_closing_balance : '')) }}" required>
+                                                <input type="text" inputmode="decimal" name="closing_balance" id="inputCloseBal" class="form-control font-monospace fw-bold @error('closing_balance') is-invalid @enderror" value="{{ old('closing_balance', $editVerification ? $editVerification->formatted_closing_balance : ($activeVerification ? $activeVerification->formatted_closing_balance : '')) }}" required>
+                                                @error('closing_balance')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -176,7 +191,7 @@
                                     </div>
                                     <pre class="mb-0 small text-body font-monospace" id="certPayloadText" style="white-space: pre-wrap; font-size: 0.78rem; line-height: 1.35; word-break: break-all;"></pre>
                                 </div>
-                                <button type="button" class="btn btn-outline-primary btn-sm fw-bold w-100" id="btnDownloadCertQr" onclick="downloadCurrentCertQR()" {{ ($activeVerification || $editVerification) ? '' : 'disabled' }}>
+                                <button type="button" class="btn btn-outline-primary btn-sm fw-bold w-100 {{ ($activeVerification || $editVerification) ? '' : 'd-none' }}" id="btnDownloadCertQr" onclick="downloadCurrentCertQR()">
                                     <i class="bi bi-download me-1"></i> Save Certificate QR
                                 </button>
                             </div>
@@ -195,7 +210,7 @@
                                     </div>
                                     <pre class="mb-0 small text-body font-monospace" id="stmtPayloadText" style="white-space: pre-wrap; font-size: 0.78rem; line-height: 1.35; word-break: break-all;"></pre>
                                 </div>
-                                <button type="button" class="btn btn-outline-success btn-sm fw-bold w-100" id="btnDownloadStmtQr" onclick="downloadCurrentStmtQR()" {{ ($activeVerification || $editVerification) ? '' : 'disabled' }}>
+                                <button type="button" class="btn btn-outline-success btn-sm fw-bold w-100 {{ ($activeVerification || $editVerification) ? '' : 'd-none' }}" id="btnDownloadStmtQr" onclick="downloadCurrentStmtQR()">
                                     <i class="bi bi-download me-1"></i> Save Statement QR
                                 </button>
                             </div>
@@ -352,9 +367,36 @@
         }
     }
 
+    // Real-time input restrictions:
+    // 1. Account No: only numbers (0-9)
+    const accNoInput = document.getElementById('inputAccountNo');
+    if (accNoInput) {
+        accNoInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    }
+
+    // 2. Account Name: only alphabetic letters, spaces, dots, hyphens
+    const accNameInput = document.getElementById('inputAccountName');
+    if (accNameInput) {
+        accNameInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^a-zA-Z\s\.\-]/g, '');
+        });
+    }
+
+    // 3. Balance inputs: only numbers and decimal point
     ['inputCertBal', 'inputOpenBal', 'inputCloseBal'].forEach(id => {
         const el = document.getElementById(id);
-        if (el) el.addEventListener('blur', formatBalanceInput);
+        if (el) {
+            el.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9.]/g, '');
+                const parts = this.value.split('.');
+                if (parts.length > 2) {
+                    this.value = parts[0] + '.' + parts.slice(1).join('');
+                }
+            });
+            el.addEventListener('blur', formatBalanceInput);
+        }
     });
 
     let currentCertUrl = document.getElementById('activeCertUrl')?.value || '';
@@ -411,16 +453,36 @@
         if (!holder) return;
         holder.innerHTML = '';
 
+        const isSaved = !!(currentCertUrl || currentStmtUrl);
+
         if (!payload) {
             holder.innerHTML = `<div class="text-muted small py-4"><i class="bi bi-qr-code fs-1 d-block text-secondary mb-2 opacity-50"></i>Fill form to preview ${type === 'cert' ? 'Certificate' : 'Statement'} QR</div>`;
             if (payloadBox) payloadBox.classList.add('d-none');
-            if (downloadBtn) downloadBtn.disabled = true;
+            if (downloadBtn) {
+                downloadBtn.classList.add('d-none');
+                downloadBtn.disabled = true;
+            }
             return;
         }
 
-        if (payloadBox) payloadBox.classList.remove('d-none');
-        if (payloadText) payloadText.textContent = payload;
-        if (downloadBtn) downloadBtn.disabled = false;
+        if (payloadBox) {
+            if (isSaved) {
+                payloadBox.classList.remove('d-none');
+                if (payloadText) payloadText.textContent = payload;
+            } else {
+                payloadBox.classList.add('d-none');
+            }
+        }
+
+        if (downloadBtn) {
+            if (isSaved) {
+                downloadBtn.classList.remove('d-none');
+                downloadBtn.disabled = false;
+            } else {
+                downloadBtn.classList.add('d-none');
+                downloadBtn.disabled = true;
+            }
+        }
 
         const canvasPad = document.createElement('div');
         canvasPad.style.background = '#ffffff';

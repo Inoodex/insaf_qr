@@ -34,18 +34,23 @@ class VerificationController extends Controller
         $this->sanitizeBalanceInputs($request);
 
         $validated = $request->validate([
-            'account_no' => 'required|string|max:50|unique:account_verifications,account_no',
-            'account_name' => 'required|string|max:255',
-            'certificate_balance' => 'required|numeric',
-            'opening_balance' => 'required|numeric',
-            'closing_balance' => 'required|numeric',
+            'account_no' => 'required|regex:/^[0-9]+$/|max:50|unique:account_verifications,account_no',
+            'account_name' => 'required|regex:/^[a-zA-Z\s\.\,\'\-]+$/|max:255',
+            'certificate_balance' => 'required|numeric|min:0',
+            'opening_balance' => 'required|numeric|min:0',
+            'closing_balance' => 'required|numeric|min:0',
             'report_generation_date' => 'required|date',
             'bank_name' => 'nullable|string|max:255',
             'branch_name' => 'nullable|string|max:255',
             'account_type' => 'nullable|string|max:100',
             'currency' => 'nullable|string|max:10',
         ], [
+            'account_no.regex' => 'The Account Number must contain only numbers (digits 0-9).',
             'account_no.unique' => 'An account verification with this Account Number already exists. Account numbers must be unique.',
+            'account_name.regex' => 'The Account Name must contain only alphabetic characters and spaces.',
+            'certificate_balance.numeric' => 'The Certificate Report Date Balance must be a valid number.',
+            'opening_balance.numeric' => 'The Opening Balance must be a valid number.',
+            'closing_balance.numeric' => 'The Closing Balance must be a valid number.',
         ]);
 
         $verification = AccountVerification::create($validated);
@@ -65,21 +70,26 @@ class VerificationController extends Controller
         $validated = $request->validate([
             'account_no' => [
                 'required',
-                'string',
+                'regex:/^[0-9]+$/',
                 'max:50',
                 Rule::unique('account_verifications', 'account_no')->ignore($verification->id),
             ],
-            'account_name' => 'required|string|max:255',
-            'certificate_balance' => 'required|numeric',
-            'opening_balance' => 'required|numeric',
-            'closing_balance' => 'required|numeric',
+            'account_name' => 'required|regex:/^[a-zA-Z\s\.\,\'\-]+$/|max:255',
+            'certificate_balance' => 'required|numeric|min:0',
+            'opening_balance' => 'required|numeric|min:0',
+            'closing_balance' => 'required|numeric|min:0',
             'report_generation_date' => 'required|date',
             'bank_name' => 'nullable|string|max:255',
             'branch_name' => 'nullable|string|max:255',
             'account_type' => 'nullable|string|max:100',
             'currency' => 'nullable|string|max:10',
         ], [
+            'account_no.regex' => 'The Account Number must contain only numbers (digits 0-9).',
             'account_no.unique' => 'An account verification with this Account Number already exists. Account numbers must be unique.',
+            'account_name.regex' => 'The Account Name must contain only alphabetic characters and spaces.',
+            'certificate_balance.numeric' => 'The Certificate Report Date Balance must be a valid number.',
+            'opening_balance.numeric' => 'The Opening Balance must be a valid number.',
+            'closing_balance.numeric' => 'The Closing Balance must be a valid number.',
         ]);
 
         $verification->update($validated);
