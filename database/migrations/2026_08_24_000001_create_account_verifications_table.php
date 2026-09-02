@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('account_verifications', function (Blueprint $table) {
             $table->id();
-            $table->string('certificate_uuid', 255)->unique();
-            $table->string('statement_uuid', 255)->unique();
-            $table->string('account_no')->unique();
+            $table->string('certificate_uuid', 191)->unique();
+            $table->string('statement_uuid', 191)->unique();
+            $table->string('account_no', 191)->unique();
             $table->string('account_name');
             $table->decimal('certificate_balance', 15, 2);
             $table->decimal('opening_balance', 15, 2);

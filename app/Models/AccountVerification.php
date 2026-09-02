@@ -34,7 +34,7 @@ class AccountVerification extends Model
     ];
 
     /**
-     * Generate 4-digit~200-character custom verification ref token
+     * Generate 4-digit~180-character custom verification ref token (185 chars total, fits MySQL VARCHAR(191))
      */
     public static function generateSecureRefToken(): string
     {
@@ -42,7 +42,7 @@ class AccountVerification extends Model
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
         $randomStr = '';
         $max = strlen($chars) - 1;
-        for ($i = 0; $i < 200; $i++) {
+        for ($i = 0; $i < 180; $i++) {
             $randomStr .= $chars[random_int(0, $max)];
         }
         return $digits . '~' . $randomStr;
