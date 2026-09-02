@@ -75,6 +75,16 @@
             font-weight: 500;
         }
 
+        @media (max-width: 576px) {
+            .header-container {
+                justify-content: flex-start;
+                gap: 10px;
+            }
+            .page-badge-container {
+                font-size: 0.85rem;
+            }
+        }
+
         .page-badge-icon {
             width: 32px;
             height: 32px;
@@ -236,14 +246,14 @@
             <!-- Left: Bank Brand -->
             <div class="bank-brand">
                 <img src="{{ asset('assets/img/logo.webp') }}" alt="Dutch-Bangla Bank" height="34" class="me-1" style="object-fit: contain;">
-                <span class="bank-name">Dutch-Bangla Bank PLC.</span>
+                <span class="bank-name d-none d-sm-inline">Dutch-Bangla Bank PLC.</span>
             </div>
 
             <!-- Right: Verification Title Badge -->
             <div class="d-flex align-items-center">
                 <div class="vr mx-3 d-none d-sm-block text-secondary opacity-25" style="height: 28px;"></div>
                 <div class="page-badge-container">
-                    <div class="page-badge-icon">
+                    <div class="page-badge-icon d-none d-sm-flex">
                         <i class="bi bi-card-checklist"></i>
                     </div>
                     <span>Account Certificate Verification</span>
