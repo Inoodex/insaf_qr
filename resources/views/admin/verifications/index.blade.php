@@ -583,44 +583,69 @@
         });
     }
 
-    function downloadRowQR(type, qrUrl, accNo) {
-        const fileName = `${type === 'cert' ? 'Certificate' : 'Statement'}_QR_${accNo}_${Date.now()}`;
+    async function downloadRowQR(type, qrUrl, accNo) {
+        if (!qrUrl) return;
+        const fileName = `${type === 'cert' ? 'Certificate' : 'Statement'}_QR_${accNo || 'Record'}_${Date.now()}`;
         const typeNum = getConsistentTypeNumber(qrUrl);
 
         if (typeof QRCodeStyling !== 'undefined') {
-            const tempQr = new QRCodeStyling({
-                width: 600,
-                height: 600,
-                type: "canvas",
-                data: qrUrl,
-                margin: 20,
-                qrOptions: { 
-                    typeNumber: typeNum,
-                    mode: 'Byte',
-                    errorCorrectionLevel: 'M' 
-                },
-                dotsOptions: { color: "#0f172a", type: "square" },
-                backgroundOptions: { color: "#ffffff" },
-                cornersSquareOptions: { type: "square", color: "#0f172a" },
-                cornersDotOptions: { type: "square", color: "#0f172a" }
-            });
-            tempQr.download({ name: fileName, extension: 'png' });
-            return;
+            try {
+                const tempQr = new QRCodeStyling({
+                    width: 600,
+                    height: 600,
+                    type: "canvas",
+                    data: qrUrl,
+                    margin: 20,
+                    qrOptions: { 
+                        typeNumber: typeNum,
+                        mode: 'Byte',
+                        errorCorrectionLevel: 'M' 
+                    },
+                    dotsOptions: { color: "#0f172a", type: "square" },
+                    backgroundOptions: { color: "#ffffff" },
+                    cornersSquareOptions: { type: "square", color: "#0f172a" },
+                    cornersDotOptions: { type: "square", color: "#0f172a" }
+                });
+                await tempQr.download({ name: fileName, extension: 'png' });
+                if (typeof showToast === 'function') {
+                    showToast(`${type === 'cert' ? 'Certificate' : 'Statement'} QR downloaded successfully!`, 'success');
+                }
+                return;
+            } catch (err) {
+                console.warn('QRCodeStyling download failed, attempting fallback...', err);
+            }
         }
 
+        // Reliable fallback
         const tempDiv = document.createElement('div');
+        tempDiv.style.position = 'absolute';
+        tempDiv.style.left = '-9999px';
         document.body.appendChild(tempDiv);
-        new QRCode(tempDiv, { text: qrUrl, width: 600, height: 600, colorDark: "#0f172a", colorLight: "#ffffff" });
+        new QRCode(tempDiv, { 
+            text: qrUrl, 
+            width: 600, 
+            height: 600, 
+            colorDark: "#0f172a", 
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.M
+        });
         setTimeout(() => {
             const canvas = tempDiv.querySelector('canvas');
-            if (canvas) {
+            const img = tempDiv.querySelector('img');
+            const src = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+            if (src) {
                 const link = document.createElement('a');
                 link.download = `${fileName}.png`;
-                link.href = canvas.toDataURL('image/png');
+                link.href = src;
+                document.body.appendChild(link);
                 link.click();
+                document.body.removeChild(link);
+                if (typeof showToast === 'function') {
+                    showToast(`${type === 'cert' ? 'Certificate' : 'Statement'} QR downloaded successfully!`, 'success');
+                }
             }
             document.body.removeChild(tempDiv);
-        }, 100);
+        }, 150);
     }
 
     function loadRow(accNo, accName, certBal, openBal, closeBal, formattedDate, ymdDate, certUrl, stmtUrl) {
