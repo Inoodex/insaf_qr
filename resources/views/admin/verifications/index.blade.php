@@ -359,14 +359,6 @@
     let certQrCodeInstance = null;
     let stmtQrCodeInstance = null;
 
-    function formatBalanceInput(e) {
-        let val = e.target.value.replace(/,/g, '').trim();
-        if (val !== '' && !isNaN(val)) {
-            let num = parseFloat(val);
-            e.target.value = num.toFixed(2);
-        }
-    }
-
     // Real-time input restrictions:
     // 1. Account No: only numbers (0-9)
     const accNoInput = document.getElementById('inputAccountNo');
@@ -384,18 +376,13 @@
         });
     }
 
-    // 3. Balance inputs: only numbers and decimal point
+    // 3. Balance inputs: manual formatting, only numbers, comma and decimal point
     ['inputCertBal', 'inputOpenBal', 'inputCloseBal'].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
             el.addEventListener('input', function() {
-                this.value = this.value.replace(/[^0-9.]/g, '');
-                const parts = this.value.split('.');
-                if (parts.length > 2) {
-                    this.value = parts[0] + '.' + parts.slice(1).join('');
-                }
+                this.value = this.value.replace(/[^0-9.,]/g, '');
             });
-            el.addEventListener('blur', formatBalanceInput);
         }
     });
 

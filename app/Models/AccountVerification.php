@@ -28,9 +28,6 @@ class AccountVerification extends Model
 
     protected $casts = [
         'report_generation_date' => 'date',
-        'certificate_balance' => 'decimal:2',
-        'opening_balance' => 'decimal:2',
-        'closing_balance' => 'decimal:2',
     ];
 
     /**
@@ -65,17 +62,17 @@ class AccountVerification extends Model
      */
     public function getFormattedCertificateBalanceAttribute(): string
     {
-        return number_format((float)$this->certificate_balance, 2, '.', '');
+        return (string)$this->certificate_balance;
     }
 
     public function getFormattedOpeningBalanceAttribute(): string
     {
-        return number_format((float)$this->opening_balance, 2, '.', '');
+        return (string)$this->opening_balance;
     }
 
     public function getFormattedClosingBalanceAttribute(): string
     {
-        return number_format((float)$this->closing_balance, 2, '.', '');
+        return (string)$this->closing_balance;
     }
 
     public function getFormattedGenerationDateAttribute(): string

@@ -30,15 +30,14 @@ class VerificationController extends Controller
      */
     public function store(Request $request)
     {
-        // Sanitize comma formatting from numeric balance inputs
-        $this->sanitizeBalanceInputs($request);
+        // No sanitization, keep exact string
 
         $validated = $request->validate([
             'account_no' => 'required|regex:/^[0-9]+$/|max:50|unique:account_verifications,account_no',
             'account_name' => 'required|regex:/^[a-zA-Z\s\.\,\'\-]+$/|max:255',
-            'certificate_balance' => 'required|numeric|min:0',
-            'opening_balance' => 'required|numeric|min:0',
-            'closing_balance' => 'required|numeric|min:0',
+            'certificate_balance' => 'required|string',
+            'opening_balance' => 'required|string',
+            'closing_balance' => 'required|string',
             'report_generation_date' => 'required|date',
             'bank_name' => 'nullable|string|max:255',
             'branch_name' => 'nullable|string|max:255',
@@ -48,9 +47,9 @@ class VerificationController extends Controller
             'account_no.regex' => 'The Account Number must contain only numbers (digits 0-9).',
             'account_no.unique' => 'An account verification with this Account Number already exists. Account numbers must be unique.',
             'account_name.regex' => 'The Account Name must contain only alphabetic characters and spaces.',
-            'certificate_balance.numeric' => 'The Certificate Report Date Balance must be a valid number.',
-            'opening_balance.numeric' => 'The Opening Balance must be a valid number.',
-            'closing_balance.numeric' => 'The Closing Balance must be a valid number.',
+            'certificate_balance.string' => 'The Certificate Report Date Balance must be a valid amount.',
+            'opening_balance.string' => 'The Opening Balance must be a valid amount.',
+            'closing_balance.string' => 'The Closing Balance must be a valid amount.',
         ]);
 
         $verification = AccountVerification::create($validated);
@@ -65,7 +64,7 @@ class VerificationController extends Controller
      */
     public function update(Request $request, AccountVerification $verification)
     {
-        $this->sanitizeBalanceInputs($request);
+        // No sanitization, keep exact string
 
         $validated = $request->validate([
             'account_no' => [
@@ -75,9 +74,9 @@ class VerificationController extends Controller
                 Rule::unique('account_verifications', 'account_no')->ignore($verification->id),
             ],
             'account_name' => 'required|regex:/^[a-zA-Z\s\.\,\'\-]+$/|max:255',
-            'certificate_balance' => 'required|numeric|min:0',
-            'opening_balance' => 'required|numeric|min:0',
-            'closing_balance' => 'required|numeric|min:0',
+            'certificate_balance' => 'required|string',
+            'opening_balance' => 'required|string',
+            'closing_balance' => 'required|string',
             'report_generation_date' => 'required|date',
             'bank_name' => 'nullable|string|max:255',
             'branch_name' => 'nullable|string|max:255',
@@ -87,9 +86,9 @@ class VerificationController extends Controller
             'account_no.regex' => 'The Account Number must contain only numbers (digits 0-9).',
             'account_no.unique' => 'An account verification with this Account Number already exists. Account numbers must be unique.',
             'account_name.regex' => 'The Account Name must contain only alphabetic characters and spaces.',
-            'certificate_balance.numeric' => 'The Certificate Report Date Balance must be a valid number.',
-            'opening_balance.numeric' => 'The Opening Balance must be a valid number.',
-            'closing_balance.numeric' => 'The Closing Balance must be a valid number.',
+            'certificate_balance.string' => 'The Certificate Report Date Balance must be a valid amount.',
+            'opening_balance.string' => 'The Opening Balance must be a valid amount.',
+            'closing_balance.string' => 'The Closing Balance must be a valid amount.',
         ]);
 
         $verification->update($validated);
@@ -111,22 +110,4 @@ class VerificationController extends Controller
             ->with('success', "Verification record for \"{$name}\" deleted successfully.");
     }
 
-    /**
-     * Helper to strip commas from currency balance inputs
-     */
-    private function sanitizeBalanceInputs(Request $request): void
-    {
-        $fields = ['certificate_balance', 'opening_balance', 'closing_balance'];
-        $merges = [];
-
-        foreach ($fields as $field) {
-            if ($request->filled($field)) {
-                $merges[$field] = str_replace(',', '', $request->input($field));
-            }
-        }
-
-        if (!empty($merges)) {
-            $request->merge($merges);
-        }
-    }
 }
