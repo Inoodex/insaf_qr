@@ -80,7 +80,7 @@ class AccountVerification extends Model
 
     public function getFormattedGenerationDateAttribute(): string
     {
-        return $this->report_generation_date ? $this->report_generation_date->format('d M Y') : '';
+        return $this->report_generation_date ? $this->report_generation_date->format('d-M-Y') : '';
     }
 
     /**
