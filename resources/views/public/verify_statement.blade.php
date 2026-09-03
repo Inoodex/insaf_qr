@@ -2,332 +2,456 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dutch-Bangla Bank PLC.</title>
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/webp" href="{{ asset('assets/img/logo.webp') }}">
     <link rel="shortcut icon" type="image/webp" href="{{ asset('assets/img/logo.webp') }}">
-    
-    <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap 5.3 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
     <style>
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            border-width: 0;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f1f5f9;
             color: #1e293b;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Top Header Navbar */
-        .top-navbar {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.85rem 1rem;
-            width: 100%;
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to bottom right, #f8fafc, #ffffff, #f1f5f9);
         }
 
-        .header-container {
-            max-width: 1140px;
+        /* Animations */
+        @keyframes qrFadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes qrHeaderWash {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes qrFooterBarShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .qr-animate-in {
+            animation: qrFadeUp 0.45s ease-out both;
+        }
+
+        /* Header */
+        .qr-header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.7);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(4px);
+            background: linear-gradient(115deg, rgba(0,85,165,0.10) 0%, rgba(255,255,255,0.92) 28%, rgba(227,28,35,0.08) 50%, rgba(255,255,255,0.94) 72%, rgba(0,150,57,0.10) 100%);
+            background-size: 220% 220%;
+            animation: qrHeaderWash 12s ease-in-out infinite;
+        }
+
+        .header-wrap {
+            max-width: 67rem;
             width: 100%;
             margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 0.625rem 0.75rem;
+        }
+        @media (min-width: 640px) {
+            .header-wrap { padding: 0.625rem 1.25rem; }
+        }
+        @media (min-width: 1024px) {
+            .header-wrap { padding: 0.625rem 2rem; }
         }
 
-        .bank-brand {
+        /* Mobile Header */
+        .header-mobile {
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-decoration: none;
+            gap: 0.625rem;
+            min-width: 0;
+        }
+        @media (min-width: 1024px) {
+            .header-mobile { display: none; }
+        }
+        .header-mobile img {
+            height: 2rem;
+            width: auto;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .header-mobile h1 {
+            min-width: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.375;
         }
 
-        .bank-name {
+        /* Desktop Header */
+        .header-desktop {
+            display: none;
+        }
+        @media (min-width: 1024px) {
+            .header-desktop {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+            }
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.625rem;
+            min-width: 0;
+        }
+        .header-left img {
+            height: 2rem;
+            width: auto;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+        .header-left p {
+            font-size: 0.875rem;
             font-weight: 700;
-            font-size: 1.15rem;
             color: #0f172a;
-            letter-spacing: -0.2px;
+            line-height: 1.25;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-
-        .page-badge-container {
-            display: flex;
+        .header-right {
+            text-align: right;
+            min-width: 0;
+            padding-left: 1rem;
+            border-left: 1px solid rgba(148, 163, 184, 0.4);
+        }
+        .header-right-inner {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            color: #334155;
-            font-size: 0.92rem;
-            font-weight: 500;
+            gap: 0.5rem;
+            justify-content: flex-end;
         }
-
-        @media (max-width: 576px) {
-            .header-container {
-                justify-content: flex-start;
-                gap: 10px;
-            }
-            .page-badge-container {
-                font-size: 0.85rem;
-            }
-        }
-
-        .page-badge-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background-color: #e0e7ff;
-            color: #4338ca;
-            display: flex;
+        .header-icon {
+            display: inline-flex;
+            height: 2.25rem;
+            width: 2.25rem;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background-color: rgba(0, 85, 165, 0.094);
+            color: #0055A5;
+        }
+        .header-icon svg {
+            height: 1.25rem;
+            width: 1.25rem;
+        }
+        .header-right h1 {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: #1e293b;
+            line-height: 1.375;
         }
 
-        /* Content Area */
+        /* Main Content */
         .main-content {
             flex: 1 0 auto;
-            max-width: 1140px;
+        }
+        .main-inner {
+            max-width: 67rem;
             width: 100%;
             margin: 0 auto;
-            padding: 2.25rem 1rem;
+            padding: 1rem 0.75rem;
+        }
+        @media (min-width: 640px) {
+            .main-inner { padding: 1.5rem 1.25rem; }
+        }
+        @media (min-width: 1024px) {
+            .main-inner { padding: 1.5rem 2rem; }
         }
 
+        /* Verification Tag */
+        .tag-wrapper {
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        @media (min-width: 640px) {
+            .tag-wrapper { text-align: left; }
+        }
         .verification-tag {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background-color: #ecfdf5;
-            color: #059669;
-            font-size: 0.72rem;
+            gap: 0.375rem;
+            border-radius: 9999px;
+            padding: 0.125rem 0.625rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            padding: 3px 10px;
-            border-radius: 50rem;
-            letter-spacing: 0.5px;
-            border: 1px solid #d1fae5;
-            margin-bottom: 0.4rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            background-color: rgba(0, 150, 57, 0.08);
+            color: #009639;
         }
-
+        @media (min-width: 640px) {
+            .verification-tag { font-size: 11px; }
+        }
         .tag-dot {
-            width: 5px;
-            height: 5px;
-            background-color: #059669;
+            height: 0.375rem;
+            width: 0.375rem;
             border-radius: 50%;
-            display: inline-block;
+            background-color: #009639;
         }
-
         .verification-desc {
+            margin-top: 0.25rem;
+            font-size: 0.75rem;
             color: #64748b;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
+            max-width: 42rem;
         }
 
-        /* Detail Box Cards */
-        .detail-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 0.95rem 1.25rem 0.95rem 1.35rem;
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+        @media (min-width: 640px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        /* Detail Card */
+        .qr-field-card {
             position: relative;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: default;
             overflow: hidden;
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-out;
+            animation: qrFadeUp 0.35s ease-out both;
+        }
+        .qr-field-card:hover {
+            transform: translateY(-4px);
+            border-color: transparent;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
         }
 
-        .detail-card::before {
-            content: '';
+        .card-glow {
             position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: linear-gradient(135deg, var(--qr-accent-glow) 0%, transparent 55%, var(--qr-accent-glow2) 100%);
+        }
+        .qr-field-card:hover .card-glow {
+            opacity: 1;
+        }
+
+        .card-bar {
+            position: absolute;
+            top: 0;
+            bottom: 0;
             left: 0;
-            top: 8px;
-            bottom: 8px;
             width: 4px;
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
-            transition: all 0.25s ease;
+            background-color: var(--qr-accent);
+            transition: all 0.3s ease-out;
         }
-
-        /* Accent Colors & Hover Effects */
-        .accent-blue::before { background-color: #2563eb; }
-        .accent-blue .card-title-text { color: #2563eb; }
-        .accent-blue:hover {
-            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04);
-            border-color: #93c5fd;
-            background: linear-gradient(90deg, #eff6ff 0%, #ffffff 45%);
-            transform: translateY(-2px);
-        }
-        .accent-blue:hover::before {
+        .qr-field-card:hover .card-bar {
             width: 6px;
-            background-color: #1d4ed8;
-            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+            box-shadow: 2px 0 10px var(--qr-accent);
         }
 
-        .accent-red::before { background-color: #dc2626; }
-        .accent-red .card-title-text { color: #dc2626; }
-        .accent-red:hover {
-            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04);
-            border-color: #fca5a5;
-            background: linear-gradient(90deg, #fef2f2 0%, #ffffff 45%);
-            transform: translateY(-2px);
+        .card-content {
+            position: relative;
+            transition: transform 0.3s ease-out;
+            padding: 0.5rem 0.875rem 0.5rem 1rem;
         }
-        .accent-red:hover::before {
-            width: 6px;
-            background-color: #b91c1c;
-            box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+        @media (min-width: 640px) {
+            .card-content { padding: 0.625rem 1rem 0.625rem 1.25rem; }
+        }
+        .qr-field-card:hover .card-content {
+            transform: translateX(0.625rem);
         }
 
-        .accent-green::before { background-color: #059669; }
-        .accent-green .card-title-text { color: #059669; }
-        .accent-green:hover {
-            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.14), 0 2px 6px rgba(0, 0, 0, 0.04);
-            border-color: #a7f3d0;
-            background: linear-gradient(90deg, #ecfdf5 0%, #ffffff 45%);
-            transform: translateY(-2px);
-        }
-        .accent-green:hover::before {
-            width: 6px;
-            background-color: #047857;
-            box-shadow: 0 0 10px rgba(5, 150, 105, 0.5);
-        }
-
-        .card-title-text {
-            font-size: 0.82rem;
-            font-weight: 500;
+        .card-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.025em;
             margin-bottom: 0.25rem;
-            display: block;
+            color: var(--qr-accent);
+        }
+        @media (min-width: 640px) {
+            .card-title { font-size: 0.875rem; }
         }
 
-        .card-value-text {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #0f172a;
+        .card-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.5rem;
+            word-break: break-word;
+        }
+        @media (min-width: 640px) {
+            .card-value { font-size: 0.95rem; }
+        }
+
+        /* Accent Colors */
+        .accent-blue {
+            --qr-accent: #0055A5;
+            --qr-accent-glow: rgba(0, 85, 165, 0.08);
+            --qr-accent-glow2: rgba(0, 85, 165, 0.04);
+        }
+        .accent-red {
+            --qr-accent: #E31C23;
+            --qr-accent-glow: rgba(227, 28, 35, 0.08);
+            --qr-accent-glow2: rgba(227, 28, 35, 0.04);
+        }
+        .accent-green {
+            --qr-accent: #009639;
+            --qr-accent-glow: rgba(0, 150, 57, 0.08);
+            --qr-accent-glow2: rgba(0, 150, 57, 0.04);
         }
 
         /* Footer */
         footer {
             margin-top: auto;
-            width: 100%;
+            border-top: 1px solid rgba(226, 232, 240, 0.8);
+            background: #ffffff;
         }
-
-        .footer-text {
+        .footer-bar {
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(90deg, #0055A5 0%, #E31C23 25%, #009639 50%, #0055A5 75%, #E31C23 100%);
+            background-size: 200% 100%;
+            animation: qrFooterBarShift 8s linear infinite;
+        }
+        .footer-inner {
+            max-width: 67rem;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0.75rem 0.75rem;
             text-align: center;
-            padding: 1rem;
+            font-size: 0.75rem;
             color: #64748b;
-            font-size: 0.78rem;
-            background-color: transparent;
         }
-
-        .footer-strip {
-            height: 3px;
-            width: 100%;
-            background: linear-gradient(to right, #008080 0%, #008080 33.33%, #dc2626 33.33%, #dc2626 66.66%, #1e40af 66.66%, #1e40af 100%);
+        @media (min-width: 640px) {
+            .footer-inner { padding: 0.875rem 1.25rem; font-size: 0.75rem; }
+        }
+        @media (min-width: 1024px) {
+            .footer-inner { padding: 0.875rem 2rem; }
         }
     </style>
 </head>
 <body>
-
-    <!-- Header Navbar -->
-    <header class="top-navbar">
-        <div class="header-container">
-            
-            <!-- Left: Bank Brand -->
-            <div class="bank-brand">
-                <img src="{{ asset('assets/img/logo.webp') }}" alt="Dutch-Bangla Bank" height="34" class="me-1" style="object-fit: contain;">
-                <span class="bank-name d-none d-sm-inline">Dutch-Bangla Bank PLC.</span>
-            </div>
-
-            <!-- Right: Verification Title Badge -->
-            <div class="d-flex align-items-center">
-                <div class="vr mx-3 d-none d-sm-block text-secondary opacity-25" style="height: 28px;"></div>
-                <div class="page-badge-container">
-                    <div class="page-badge-icon d-none d-sm-flex">
-                        <i class="bi bi-card-checklist"></i>
+    <div class="page-wrapper">
+        <header class="qr-header qr-animate-in">
+            <div class="header-wrap">
+                <div class="header-mobile">
+                    <img src="{{ asset('assets/img/logo.webp') }}" alt="Dutch-Bangla Bank logo">
+                    <h1>Account Statement Verification</h1>
+                </div>
+                <div class="header-desktop">
+                    <div class="header-left">
+                        <img src="{{ asset('assets/img/logo.webp') }}" alt="Dutch-Bangla Bank logo">
+                        <p>Dutch-Bangla Bank PLC.</p>
                     </div>
-                    <span>Account Statement Verification</span>
+                    <div class="header-right">
+                        <div class="header-right-inner">
+                            <span class="header-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10h2"></path><path d="M16 14h2"></path><path d="M6.17 15a3 3 0 0 1 5.66 0"></path><circle cx="9" cy="11" r="2"></circle><rect x="2" y="5" width="20" height="14" rx="2"></rect></svg>
+                            </span>
+                            <h1>Account Statement Verification</h1>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </header>
 
-        </div>
-    </header>
+        <main class="main-content">
+            <div class="main-inner">
+                <div class="tag-wrapper qr-animate-in">
+                    <p class="verification-tag">
+                        <span class="tag-dot"></span>
+                        Verification Details
+                    </p>
+                    <p class="verification-desc">The following information was retrieved from the scanned QR Code and verified.</p>
+                </div>
 
-    <!-- Main Verification Body -->
-    <main class="main-content">
-        
-        <!-- Verification Details Tag -->
-        <div class="verification-tag">
-            <span class="tag-dot"></span>
-            VERIFICATION DETAILS
-        </div>
-        
-        <p class="verification-desc">The following information was retrieved from the scanned QR Code and verified.</p>
+                <div class="cards-grid">
+                    <div class="qr-field-card accent-blue" style="animation-delay: 0ms;">
+                        <div class="card-glow" aria-hidden="true"></div>
+                        <div class="card-bar" aria-hidden="true"></div>
+                        <div class="card-content">
+                            <p class="card-title" title="Account No">Account No</p>
+                            <p class="card-value" title="{{ $statement->account_no }}">{{ $statement->account_no }}</p>
+                        </div>
+                    </div>
 
-        <!-- 2-Column Grid -->
-        <div class="row g-3">
-            
-            <!-- 1. Account No (Blue) -->
-            <div class="col-md-6">
-                <div class="detail-card accent-blue" title="{{ $statement->account_no }}">
-                    <span class="card-title-text">Account No</span>
-                    <div class="card-value-text">{{ $statement->account_no }}</div>
+                    <div class="qr-field-card accent-red" style="animation-delay: 28ms;">
+                        <div class="card-glow" aria-hidden="true"></div>
+                        <div class="card-bar" aria-hidden="true"></div>
+                        <div class="card-content">
+                            <p class="card-title" title="Account Name">Account Name</p>
+                            <p class="card-value" title="{{ $statement->account_name }}">{{ $statement->account_name }}</p>
+                        </div>
+                    </div>
+
+                    <div class="qr-field-card accent-green" style="animation-delay: 56ms;">
+                        <div class="card-glow" aria-hidden="true"></div>
+                        <div class="card-bar" aria-hidden="true"></div>
+                        <div class="card-content">
+                            <p class="card-title" title="Opening Balance">Opening Balance</p>
+                            <p class="card-value" title="{{ $statement->formatted_opening_balance }}">{{ $statement->formatted_opening_balance }}</p>
+                        </div>
+                    </div>
+
+                    <div class="qr-field-card accent-blue" style="animation-delay: 84ms;">
+                        <div class="card-glow" aria-hidden="true"></div>
+                        <div class="card-bar" aria-hidden="true"></div>
+                        <div class="card-content">
+                            <p class="card-title" title="Closing Balance">Closing Balance</p>
+                            <p class="card-value" title="{{ $statement->formatted_closing_balance }}">{{ $statement->formatted_closing_balance }}</p>
+                        </div>
+                    </div>
+
+                    <div class="qr-field-card accent-red" style="animation-delay: 112ms;">
+                        <div class="card-glow" aria-hidden="true"></div>
+                        <div class="card-bar" aria-hidden="true"></div>
+                        <div class="card-content">
+                            <p class="card-title" title="Report Generation Date">Report Generation Date</p>
+                            <p class="card-value" title="{{ $statement->formatted_generation_date }}">{{ $statement->formatted_generation_date }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </main>
 
-            <!-- 2. Account Name (Red) -->
-            <div class="col-md-6">
-                <div class="detail-card accent-red" title="{{ $statement->account_name }}">
-                    <span class="card-title-text">Account Name</span>
-                    <div class="card-value-text">{{ $statement->account_name }}</div>
-                </div>
+        <footer>
+            <div class="footer-bar" aria-hidden="true"></div>
+            <div class="footer-inner">
+                <p>Copyright @ {{ date('Y') }}. Dutch-Bangla Bank</p>
             </div>
-
-            <!-- 3. Opening Balance (Green) -->
-            <div class="col-md-6">
-                <div class="detail-card accent-green" title="{{ $statement->formatted_opening_balance }}">
-                    <span class="card-title-text">Opening Balance</span>
-                    <div class="card-value-text">{{ $statement->formatted_opening_balance }}</div>
-                </div>
-            </div>
-
-            <!-- 4. Closing Balance (Blue) -->
-            <div class="col-md-6">
-                <div class="detail-card accent-blue" title="{{ $statement->formatted_closing_balance }}">
-                    <span class="card-title-text">Closing Balance</span>
-                    <div class="card-value-text">{{ $statement->formatted_closing_balance }}</div>
-                </div>
-            </div>
-
-            <!-- 5. Report Generation Date (Red) -->
-            <div class="col-md-6">
-                <div class="detail-card accent-red" title="{{ $statement->formatted_generation_date }}">
-                    <span class="card-title-text">Report Generation Date</span>
-                    <div class="card-value-text">{{ $statement->formatted_generation_date }}</div>
-                </div>
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- Bottom Strip & Footer -->
-    <footer>
-        <div class="footer-strip"></div>
-        <div class="footer-text">
-            Copyright @ {{ date('Y') }}. Dutch-Bangla Bank
-        </div>
-    </footer>
-
+        </footer>
+    </div>
 </body>
 </html>
