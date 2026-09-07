@@ -70,7 +70,7 @@
             max-width: 67rem;
             width: 100%;
             margin: 0 auto;
-            padding: 0.625rem 0.75rem;
+            padding: 1.125rem 1.25rem;
         }
         @media (min-width: 640px) {
             .header-wrap { padding: 0.625rem 1.25rem; }
@@ -178,7 +178,7 @@
             max-width: 67rem;
             width: 100%;
             margin: 0 auto;
-            padding: 1rem 0.75rem;
+            padding: 0.75rem 1.25rem;
         }
         @media (min-width: 640px) {
             .main-inner { padding: 1.5rem 1.25rem; }
@@ -190,7 +190,7 @@
         /* Verification Tag */
         .tag-wrapper {
             text-align: center;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1.25rem;
         }
         @media (min-width: 640px) {
             .tag-wrapper { text-align: left; }
@@ -207,6 +207,7 @@
             text-transform: uppercase;
             background-color: rgba(0, 150, 57, 0.08);
             color: #009639;
+            margin-bottom: 0.375rem;
         }
         @media (min-width: 640px) {
             .verification-tag { font-size: 11px; }
@@ -284,7 +285,7 @@
         .card-content {
             position: relative;
             transition: transform 0.3s ease-out;
-            padding: 0.5rem 0.875rem 0.5rem 1rem;
+            padding: 0.625rem 1rem 0.625rem 1.125rem;
         }
         @media (min-width: 640px) {
             .card-content { padding: 0.625rem 1rem 0.625rem 1.25rem; }
@@ -295,9 +296,9 @@
 
         .card-title {
              font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.025em;
-            margin-bottom: 0.25rem;
+            font-weight: 500;
+            letter-spacing: 0.035em;
+            margin-bottom: 0.5rem;
             color: var(--qr-accent);
         }
         @media (min-width: 640px) {
@@ -305,9 +306,9 @@
         }
 
         .card-value {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #1e293b;
+            font-size:1.2rem;
+            font-weight: 900;
+            color:#3c3c3c;
             line-height: 1.5rem;
             word-break: break-word;
         }
@@ -322,7 +323,7 @@
             --qr-accent-glow2: rgba(0, 85, 165, 0.04);
         }
         .accent-red {
-            --qr-accent: #E31C23;
+            --qr-accent: #CC1E29;
             --qr-accent-glow: rgba(227, 28, 35, 0.08);
             --qr-accent-glow2: rgba(227, 28, 35, 0.04);
         }
@@ -359,6 +360,16 @@
         }
         @media (min-width: 1024px) {
             .footer-inner { padding: 0.875rem 2rem; }
+        }
+
+        /* Mobile Font Overrides */
+        @media (max-width: 639px) {
+            .card-title { font-size: 0.8125rem; font-weight: 200; }
+            .card-value { font-size: 0.875rem; font-weight: 200; color: #1e293b; }
+            .card-content { padding: 0.625rem 0.75rem 0.625rem 0.875rem; }
+            .verification-tag { font-size: 0.65rem; }
+            .verification-desc { font-size: 0.8rem; }
+            .header-mobile h1 { font-size: 0.875rem; }
         }
     </style>
 </head>

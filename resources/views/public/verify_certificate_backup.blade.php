@@ -70,7 +70,7 @@
             max-width: 67rem;
             width: 100%;
             margin: 0 auto;
-            padding: 1.125rem 1.25rem;
+            padding: 0.625rem 0.75rem;
         }
         @media (min-width: 640px) {
             .header-wrap { padding: 0.625rem 1.25rem; }
@@ -178,7 +178,7 @@
             max-width: 67rem;
             width: 100%;
             margin: 0 auto;
-            padding: 0.75rem 1.25rem;
+            padding: 1rem 0.75rem;
         }
         @media (min-width: 640px) {
             .main-inner { padding: 1.5rem 1.25rem; }
@@ -190,7 +190,7 @@
         /* Verification Tag */
         .tag-wrapper {
             text-align: center;
-            margin-bottom: 1.25rem;
+            margin-bottom: 0.75rem;
         }
         @media (min-width: 640px) {
             .tag-wrapper { text-align: left; }
@@ -207,7 +207,6 @@
             text-transform: uppercase;
             background-color: rgba(0, 150, 57, 0.08);
             color: #009639;
-            margin-bottom: 0.375rem;
         }
         @media (min-width: 640px) {
             .verification-tag { font-size: 11px; }
@@ -285,7 +284,7 @@
         .card-content {
             position: relative;
             transition: transform 0.3s ease-out;
-            padding: 0.625rem 1rem 0.625rem 1.125rem;
+            padding: 0.5rem 0.875rem 0.5rem 1rem;
         }
         @media (min-width: 640px) {
             .card-content { padding: 0.625rem 1rem 0.625rem 1.25rem; }
@@ -295,10 +294,10 @@
         }
 
         .card-title {
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.035em;
-            margin-bottom: 0.5rem;
+             font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.025em;
+            margin-bottom: 0.25rem;
             color: var(--qr-accent);
         }
         @media (min-width: 640px) {
@@ -306,9 +305,9 @@
         }
 
         .card-value {
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             font-weight: 700;
-            color: #3c3c3c;
+            color: #1e293b;
             line-height: 1.5rem;
             word-break: break-word;
         }
@@ -323,7 +322,7 @@
             --qr-accent-glow2: rgba(0, 85, 165, 0.04);
         }
         .accent-red {
-            --qr-accent:#CC1E29;
+            --qr-accent: #E31C23;
             --qr-accent-glow: rgba(227, 28, 35, 0.08);
             --qr-accent-glow2: rgba(227, 28, 35, 0.04);
         }
@@ -361,16 +360,6 @@
         @media (min-width: 1024px) {
             .footer-inner { padding: 0.875rem 2rem; }
         }
-
-        /* Mobile Font Overrides */
-        @media (max-width: 639px) {
-            .card-title { font-size: 0.8125rem; font-weight: 600; }
-            .card-value { font-size: 0.875rem; font-weight: 500; color: #1e293b; }
-            .card-content { padding: 0.825rem 0.75rem 0.625rem 0.875rem; }
-            .verification-tag { font-size: 0.45rem; }
-            .verification-desc { font-size: 0.8rem; }
-            .header-mobile h1 { font-size: 0.675rem; }
-        }
     </style>
 </head>
 <body>
@@ -379,7 +368,7 @@
             <div class="header-wrap">
                 <div class="header-mobile">
                     <img src="{{ asset('assets/img/logo.webp') }}" alt="Dutch-Bangla Bank logo">
-                    <h1>Account Statement Verification</h1>
+                    <h1>Account Certificate Verification</h1>
                 </div>
                 <div class="header-desktop">
                     <div class="header-left">
@@ -391,7 +380,7 @@
                             <span class="header-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 10h2"></path><path d="M16 14h2"></path><path d="M6.17 15a3 3 0 0 1 5.66 0"></path><circle cx="9" cy="11" r="2"></circle><rect x="2" y="5" width="20" height="14" rx="2"></rect></svg>
                             </span>
-                            <h1>Account Statement Verification</h1>
+                            <h1>Account Certificate Verification</h1>
                         </div>
                     </div>
                 </div>
@@ -414,7 +403,7 @@
                         <div class="card-bar" aria-hidden="true"></div>
                         <div class="card-content">
                             <p class="card-title" title="Account No">Account No</p>
-                            <p class="card-value" title="{{ $statement->account_no }}">{{ $statement->account_no }}</p>
+                            <p class="card-value" title="{{ $certificate->account_no }}">{{ $certificate->account_no }}</p>
                         </div>
                     </div>
 
@@ -423,7 +412,7 @@
                         <div class="card-bar" aria-hidden="true"></div>
                         <div class="card-content">
                             <p class="card-title" title="Account Name">Account Name</p>
-                            <p class="card-value" title="{{ $statement->account_name }}">{{ $statement->account_name }}</p>
+                            <p class="card-value" title="{{ $certificate->account_name }}">{{ $certificate->account_name }}</p>
                         </div>
                     </div>
 
@@ -431,8 +420,8 @@
                         <div class="card-glow" aria-hidden="true"></div>
                         <div class="card-bar" aria-hidden="true"></div>
                         <div class="card-content">
-                            <p class="card-title" title="Opening Balance">Opening Balance</p>
-                            <p class="card-value" title="{{ $statement->formatted_opening_balance }}">{{ $statement->formatted_opening_balance }}</p>
+                            <p class="card-title" title="Report Date Balance">Report Date Balance</p>
+                            <p class="card-value" title="{{ $certificate->formatted_balance }}">{{ $certificate->formatted_balance }}</p>
                         </div>
                     </div>
 
@@ -440,17 +429,8 @@
                         <div class="card-glow" aria-hidden="true"></div>
                         <div class="card-bar" aria-hidden="true"></div>
                         <div class="card-content">
-                            <p class="card-title" title="Closing Balance">Closing Balance</p>
-                            <p class="card-value" title="{{ $statement->formatted_closing_balance }}">{{ $statement->formatted_closing_balance }}</p>
-                        </div>
-                    </div>
-
-                    <div class="qr-field-card accent-red" style="animation-delay: 112ms;">
-                        <div class="card-glow" aria-hidden="true"></div>
-                        <div class="card-bar" aria-hidden="true"></div>
-                        <div class="card-content">
                             <p class="card-title" title="Report Generation Date">Report Generation Date</p>
-                            <p class="card-value" title="{{ $statement->formatted_generation_date }}">{{ $statement->formatted_generation_date }}</p>
+                            <p class="card-value" title="{{ $certificate->formatted_generation_date }}">{{ $certificate->formatted_generation_date }}</p>
                         </div>
                     </div>
                 </div>

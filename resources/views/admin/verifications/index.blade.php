@@ -492,10 +492,10 @@
                         mode: 'Byte',
                         errorCorrectionLevel: 'M' 
                     },
-                    dotsOptions: { color: "#0f172a", type: "square" },
+                    dotsOptions: { color: "#334155", type: "square" },
                     backgroundOptions: { color: "#ffffff" },
-                    cornersSquareOptions: { type: "square", color: "#0f172a" },
-                    cornersDotOptions: { type: "square", color: "#0f172a" }
+                    cornersSquareOptions: { type: "square", color: "#334155" },
+                    cornersDotOptions: { type: "square", color: "#334155" }
                 });
                 qr.append(canvasPad);
                 if (type === 'cert') certQrCodeInstance = qr;
@@ -511,7 +511,7 @@
                 text: payload,
                 width: 200,
                 height: 200,
-                colorDark: "#0f172a",
+                colorDark: "#334155",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.M
             });
@@ -588,10 +588,10 @@
                         mode: 'Byte',
                         errorCorrectionLevel: 'M' 
                     },
-                    dotsOptions: { color: "#0f172a", type: "square" },
+                    dotsOptions: { color: "#334155", type: "square" },
                     backgroundOptions: { color: "#ffffff" },
-                    cornersSquareOptions: { type: "square", color: "#0f172a" },
-                    cornersDotOptions: { type: "square", color: "#0f172a" }
+                    cornersSquareOptions: { type: "square", color: "#334155" },
+                    cornersDotOptions: { type: "square", color: "#334155" }
                 });
                 await tempQr.download({ name: fileName, extension: 'png' });
                 if (typeof showToast === 'function') {
@@ -612,7 +612,7 @@
             text: qrUrl, 
             width: 600, 
             height: 600, 
-            colorDark: "#0f172a", 
+            colorDark: "#334155", 
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.M
         });
