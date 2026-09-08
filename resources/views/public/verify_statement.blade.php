@@ -24,6 +24,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -67,16 +68,16 @@
         }
 
         .header-wrap {
-            max-width: 67rem;
+            max-width: 72rem;
             width: 100%;
             margin: 0 auto;
-            padding: 1.125rem 1.25rem;
+            padding: 0.625rem 0.75rem;
         }
         @media (min-width: 640px) {
-            .header-wrap { padding: 0.625rem 1.25rem; }
+            .header-wrap { padding: 0.75rem 1.25rem; }
         }
         @media (min-width: 1024px) {
-            .header-wrap { padding: 0.625rem 2rem; }
+            .header-wrap { padding: 0.75rem 2rem; }
         }
 
         /* Mobile Header */
@@ -86,21 +87,28 @@
             gap: 0.625rem;
             min-width: 0;
         }
+        @media (min-width: 640px) {
+            .header-mobile { gap: 0.75rem; }
+        }
         @media (min-width: 1024px) {
             .header-mobile { display: none; }
         }
         .header-mobile img {
-            height: 2rem;
+            height: 2.25rem;
             width: auto;
             object-fit: contain;
             flex-shrink: 0;
         }
         .header-mobile h1 {
+            font-family: ui-sans-serif, system-ui, sans-serif;
             min-width: 0;
             font-size: 1rem;
             font-weight: 600;
             color: #1e293b;
             line-height: 1.375;
+        }
+        @media (min-width: 640px) {
+            .header-mobile h1 { font-size: 1.125rem; }
         }
 
         /* Desktop Header */
@@ -122,13 +130,14 @@
             min-width: 0;
         }
         .header-left img {
-            height: 2rem;
+            height: 2.25rem;
             width: auto;
             object-fit: contain;
             flex-shrink: 0;
         }
         .header-left p {
-            font-size: 0.875rem;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            font-size: 1rem;
             font-weight: 700;
             color: #0f172a;
             line-height: 1.25;
@@ -164,8 +173,10 @@
             width: 1.25rem;
         }
         .header-right h1 {
-            font-size: 0.9375rem;
-            font-weight: 600;
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: #1E293B;
             color: #1e293b;
             line-height: 1.375;
         }
@@ -175,10 +186,10 @@
             flex: 1 0 auto;
         }
         .main-inner {
-            max-width: 67rem;
+            max-width: 72rem;
             width: 100%;
             margin: 0 auto;
-            padding: 0.75rem 1.25rem;
+            padding: 1rem 0.75rem;
         }
         @media (min-width: 640px) {
             .main-inner { padding: 1.5rem 1.25rem; }
@@ -201,16 +212,17 @@
             gap: 0.375rem;
             border-radius: 9999px;
             padding: 0.125rem 0.625rem;
-            font-size: 0.75rem;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            font-size: 12px;
             font-weight: 600;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.025em;
             text-transform: uppercase;
             background-color: rgba(0, 150, 57, 0.08);
             color: #009639;
-            margin-bottom: 0.375rem;
+            margin-bottom: 0;
         }
         @media (min-width: 640px) {
-            .verification-tag { font-size: 11px; }
+            .verification-tag { font-size: 13px; }
         }
         .tag-dot {
             height: 0.375rem;
@@ -219,8 +231,9 @@
             background-color: #009639;
         }
         .verification-desc {
+            font-family: ui-sans-serif, system-ui, sans-serif;
             margin-top: 0.25rem;
-            font-size: 0.75rem;
+            font-size: 0.875rem;
             color: #64748b;
             max-width: 42rem;
         }
@@ -295,10 +308,11 @@
         }
 
         .card-title {
+            font-family: ui-sans-serif, system-ui, sans-serif;
             font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.035em;
-            margin-bottom: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            margin-bottom: 0.25rem;
             color: var(--qr-accent);
         }
         @media (min-width: 640px) {
@@ -306,14 +320,20 @@
         }
 
         .card-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #3c3c3c;
-            line-height: 1.5rem;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #1e293b;
+            line-height: 1.625;
+            overflow-wrap: anywhere;
             word-break: break-word;
+            transition: color 300ms ease;
+        }
+        .card:hover .card-value {
+            color: #0f172a;
         }
         @media (min-width: 640px) {
-            .card-value { font-size: 0.95rem; }
+            .card-value { font-size: 1rem; }
         }
 
         /* Accent Colors */
@@ -364,12 +384,81 @@
 
         /* Mobile Font Overrides */
         @media (max-width: 639px) {
-            .card-title { font-size: 0.8125rem; font-weight: 600; }
+            .card-title { font-size: 0.75rem; font-weight: 600; }
             .card-value { font-size: 0.875rem; font-weight: 500; color: #1e293b; }
-            .card-content { padding: 0.825rem 0.75rem 0.625rem 0.875rem; }
-            .verification-tag { font-size: 0.45rem; }
-            .verification-desc { font-size: 0.8rem; }
-            .header-mobile h1 { font-size: 0.675rem; }
+            .card-content { padding: 0.5rem 0.875rem 0.5rem 1rem; }
+            .verification-tag { font-size: 12px; }
+            .verification-desc { font-size: 0.875rem; }
+            .header-mobile h1 { font-size: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .header-wrap {
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
+            }
+
+            .header-mobile {
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .header-mobile img {
+                height: 1.9rem;
+            }
+
+            .header-mobile h1 {
+                font-size: 0.8rem;
+                line-height: 1.3;
+                letter-spacing: -0.01em;
+            }
+
+            .main-inner {
+                padding-left: 0.625rem;
+                padding-right: 0.625rem;
+                padding-top: 0.875rem;
+            }
+
+            .tag-wrapper {
+                margin-bottom: 0.875rem;
+                text-align: left;
+            }
+
+            .verification-tag {
+                display: inline-flex;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .verification-desc {
+                font-size: 0.8rem;
+                line-height: 1.5;
+            }
+
+            .cards-grid {
+                gap: 0.625rem;
+            }
+
+            .qr-field-card {
+                border-radius: 0.65rem;
+            }
+
+            .card-content {
+                padding: 0.625rem 0.8rem 0.625rem 0.875rem;
+            }
+
+            .card-title {
+                margin-bottom: 0.2rem;
+            }
+
+            .card-value {
+                font-size: 0.82rem;
+                line-height: 1.5;
+            }
+
+            .footer-inner {
+                padding-left: 0.625rem;
+                padding-right: 0.625rem;
+            }
         }
     </style>
 </head>

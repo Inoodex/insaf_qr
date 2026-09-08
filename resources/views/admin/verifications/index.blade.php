@@ -422,8 +422,11 @@
 
     function getConsistentTypeNumber(payload) {
         const len = (payload || '').length;
-        if (len > 320) return 0; // Auto-scale if text exceeds capacity
-        return 11; // Locked to Version 11 (61x61) for URLs
+        if (len <= 192) return 8; // Version 8 (49x49) matching official document density
+        if (len <= 230) return 9; // Version 9 (53x53)
+        if (len <= 270) return 10;
+        if (len <= 320) return 11;
+        return 0; // Auto-scale
     }
 
     function renderQR(type, payload) {
@@ -492,10 +495,10 @@
                         mode: 'Byte',
                         errorCorrectionLevel: 'M' 
                     },
-                    dotsOptions: { color: "#334155", type: "square" },
+                    dotsOptions: { color: "#222a36", type: "square" },
                     backgroundOptions: { color: "#ffffff" },
-                    cornersSquareOptions: { type: "square", color: "#334155" },
-                    cornersDotOptions: { type: "square", color: "#334155" }
+                    cornersSquareOptions: { type: "square", color: "#222a36" },
+                    cornersDotOptions: { type: "square", color: "#222a36" }
                 });
                 qr.append(canvasPad);
                 if (type === 'cert') certQrCodeInstance = qr;
@@ -511,7 +514,7 @@
                 text: payload,
                 width: 200,
                 height: 200,
-                colorDark: "#334155",
+                colorDark: "#222a36",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.M
             });
@@ -588,10 +591,10 @@
                         mode: 'Byte',
                         errorCorrectionLevel: 'M' 
                     },
-                    dotsOptions: { color: "#334155", type: "square" },
+                    dotsOptions: { color: "#222a36", type: "square" },
                     backgroundOptions: { color: "#ffffff" },
-                    cornersSquareOptions: { type: "square", color: "#334155" },
-                    cornersDotOptions: { type: "square", color: "#334155" }
+                    cornersSquareOptions: { type: "square", color: "#222a36" },
+                    cornersDotOptions: { type: "square", color: "#222a36" }
                 });
                 await tempQr.download({ name: fileName, extension: 'png' });
                 if (typeof showToast === 'function') {
@@ -612,7 +615,7 @@
             text: qrUrl, 
             width: 600, 
             height: 600, 
-            colorDark: "#334155", 
+            colorDark: "#222a36", 
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.M
         });
