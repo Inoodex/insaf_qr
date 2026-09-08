@@ -24,7 +24,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -175,8 +174,7 @@
         .header-right h1 {
             font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
             font-size: 1.125rem;
-            font-weight: 500;
-            color: #1E293B;
+            font-weight: 600;
             color: #1e293b;
             line-height: 1.375;
         }
@@ -296,7 +294,6 @@
         }
 
         .card-content {
-            position: relative;
             transition: transform 0.3s ease-out;
             padding: 0.625rem 1rem 0.625rem 1.125rem;
         }
@@ -325,11 +322,10 @@
             font-weight: 500;
             color: #1e293b;
             line-height: 1.625;
-            overflow-wrap: anywhere;
-            word-break: break-word;
+            overflow-wrap: break-word;
             transition: color 300ms ease;
         }
-        .card:hover .card-value {
+        .qr-field-card:hover .card-value {
             color: #0f172a;
         }
         @media (min-width: 640px) {
@@ -390,75 +386,6 @@
             .verification-tag { font-size: 12px; }
             .verification-desc { font-size: 0.875rem; }
             .header-mobile h1 { font-size: 1rem; }
-        }
-
-        @media (max-width: 480px) {
-            .header-wrap {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
-            }
-
-            .header-mobile {
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            .header-mobile img {
-                height: 1.9rem;
-            }
-
-            .header-mobile h1 {
-                font-size: 0.8rem;
-                line-height: 1.3;
-                letter-spacing: -0.01em;
-            }
-
-            .main-inner {
-                padding-left: 0.625rem;
-                padding-right: 0.625rem;
-                padding-top: 0.875rem;
-            }
-
-            .tag-wrapper {
-                margin-bottom: 0.875rem;
-                text-align: left;
-            }
-
-            .verification-tag {
-                display: inline-flex;
-                padding: 0.2rem 0.5rem;
-            }
-
-            .verification-desc {
-                font-size: 0.8rem;
-                line-height: 1.5;
-            }
-
-            .cards-grid {
-                gap: 0.625rem;
-            }
-
-            .qr-field-card {
-                border-radius: 0.65rem;
-            }
-
-            .card-content {
-                padding: 0.625rem 0.8rem 0.625rem 0.875rem;
-            }
-
-            .card-title {
-                margin-bottom: 0.2rem;
-            }
-
-            .card-value {
-                font-size: 0.82rem;
-                line-height: 1.5;
-            }
-
-            .footer-inner {
-                padding-left: 0.625rem;
-                padding-right: 0.625rem;
-            }
         }
     </style>
 </head>
