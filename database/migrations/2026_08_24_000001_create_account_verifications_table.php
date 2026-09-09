@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('account_verifications', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('certificate_uuid', 191)->unique();
             $table->string('statement_uuid', 191)->unique();
             $table->string('account_no', 191)->unique();

@@ -11,6 +11,7 @@ class AccountVerification extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'certificate_uuid',
         'statement_uuid',
         'account_no',
@@ -31,6 +32,14 @@ class AccountVerification extends Model
     ];
 
     /**
+     * Owner user relationship
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Generate 4-digit~180-character custom verification ref token (185 chars total, fits MySQL VARCHAR(191))
      */
     public static function generateSecureRefToken(): string
@@ -39,7 +48,7 @@ class AccountVerification extends Model
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
         $randomStr = '';
         $max = strlen($chars) - 1;
-        for ($i = 0; $i < 180; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $randomStr .= $chars[random_int(0, $max)];
         }
         return $digits . '~' . $randomStr;
@@ -48,6 +57,9 @@ class AccountVerification extends Model
     protected static function booted()
     {
         static::creating(function ($verification) {
+            if (empty($verification->user_id) && auth()->check()) {
+                $verification->user_id = auth()->id();
+            }
             if (empty($verification->certificate_uuid)) {
                 $verification->certificate_uuid = static::generateSecureRefToken();
             }

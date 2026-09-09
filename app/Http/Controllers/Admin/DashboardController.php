@@ -13,8 +13,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $totalVerifications = AccountVerification::count();
-        $recentVerifications = AccountVerification::latest()->take(6)->get();
+        $userId = auth()->id();
+        $totalVerifications = AccountVerification::where('user_id', $userId)->count();
+        $recentVerifications = AccountVerification::where('user_id', $userId)->latest()->take(6)->get();
 
         return view('admin.dashboard', compact(
             'totalVerifications',

@@ -11,27 +11,27 @@ class VerificationController extends Controller
 {
     /**
      * Unified Verification Generator & Management (Certificate + Statement)
+     * Scoped to the currently authenticated user
      */
     public function index(Request $request)
     {
-        $verifications = AccountVerification::latest()->get();
+        $userId = auth()->id();
+        $verifications = AccountVerification::where('user_id', $userId)->latest()->get();
 
         $editId = $request->query('edit');
-        $editVerification = $editId ? AccountVerification::find($editId) : null;
+        $editVerification = $editId ? AccountVerification::where('user_id', $userId)->find($editId) : null;
 
         $activeId = $request->query('id', session('active_verification_id'));
-        $activeVerification = $activeId ? AccountVerification::find($activeId) : ($editVerification ?? null);
+        $activeVerification = $activeId ? AccountVerification::where('user_id', $userId)->find($activeId) : ($editVerification ?? null);
 
         return view('admin.verifications.index', compact('verifications', 'activeVerification', 'editVerification'));
     }
 
     /**
-     * Store new Unified Verification record and generate both QRs
+     * Store new Unified Verification record and generate both QRs for current user
      */
     public function store(Request $request)
     {
-        // No sanitization, keep exact string
-
         $validated = $request->validate([
             'account_no' => 'required|regex:/^[0-9]+$/|max:50|unique:account_verifications,account_no',
             'account_name' => 'required|regex:/^[a-zA-Z\s\.\,\'\-]+$/|max:255',
@@ -52,6 +52,7 @@ class VerificationController extends Controller
             'closing_balance.string' => 'The Closing Balance must be a valid amount.',
         ]);
 
+        $validated['user_id'] = auth()->id();
         $verification = AccountVerification::create($validated);
 
         return redirect()->route('admin.verifications.index', ['id' => $verification->id])
@@ -64,7 +65,10 @@ class VerificationController extends Controller
      */
     public function update(Request $request, AccountVerification $verification)
     {
-        // No sanitization, keep exact string
+        // Enforce user ownership
+        if ($verification->user_id && $verification->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this verification record.');
+        }
 
         $validated = $request->validate([
             'account_no' => [
@@ -103,11 +107,15 @@ class VerificationController extends Controller
      */
     public function destroy(AccountVerification $verification)
     {
+        // Enforce user ownership
+        if ($verification->user_id && $verification->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this verification record.');
+        }
+
         $name = $verification->account_name;
         $verification->delete();
 
         return redirect()->route('admin.verifications.index')
             ->with('success', "Verification record for \"{$name}\" deleted successfully.");
     }
-
 }
