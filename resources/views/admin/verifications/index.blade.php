@@ -85,31 +85,11 @@
                             <!-- Two Distinct Verification Sections -->
                             <div class="row g-3">
                                 
-                                <!-- Section 1: Certificate -->
-                                <div class="col-md-6">
-                                    <div class="p-3 rounded-3 border h-100" style="background-color: rgba(79, 70, 229, 0.03); border-color: rgba(79, 70, 229, 0.2) !important;">
-                                        <h6 class="fw-bold mb-3 text-primary d-flex align-items-center">
-                                            <i class="bi bi-patch-check-fill me-2"></i>2. Certificate Section
-                                        </h6>
-                                        <div>
-                                            <label class="form-label fw-bold small text-muted text-uppercase">Report Date Balance <span class="text-danger">*</span></label>
-                                            <div class="input-group input-group-md">
-                                                <span class="input-group-text fw-bold text-primary">BDT</span>
-                                                <input type="text" inputmode="decimal" name="certificate_balance" id="inputCertBal" class="form-control font-monospace fw-bold @error('certificate_balance') is-invalid @enderror" value="{{ old('certificate_balance', $editVerification ? $editVerification->formatted_certificate_balance : ($activeVerification ? $activeVerification->formatted_certificate_balance : '')) }}" required>
-                                                @error('certificate_balance')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <small class="text-muted mt-1 d-block">Shown on Certificate verification</small>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Section 2: Statement -->
+                                <!-- Section 1: Statement -->
                                 <div class="col-md-6">
                                     <div class="p-3 rounded-3 border h-100" style="background-color: rgba(16, 185, 129, 0.03); border-color: rgba(16, 185, 129, 0.2) !important;">
                                         <h6 class="fw-bold mb-3 text-success d-flex align-items-center">
-                                            <i class="bi bi-file-earmark-text-fill me-2"></i>3. Statement Section
+                                            <i class="bi bi-file-earmark-text-fill me-2"></i>2. Statement Section
                                         </h6>
                                         <div class="mb-2">
                                             <label class="form-label fw-bold small text-muted text-uppercase">Opening Balance <span class="text-danger">*</span></label>
@@ -130,6 +110,26 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Section 2: Certificate -->
+                                 <div class="col-md-6">
+                                    <div class="p-3 rounded-3 border h-100" style="background-color: rgba(79, 70, 229, 0.03); border-color: rgba(79, 70, 229, 0.2) !important;">
+                                        <h6 class="fw-bold mb-3 text-primary d-flex align-items-center">
+                                            <i class="bi bi-patch-check-fill me-2"></i>3. Certificate Section
+                                        </h6>
+                                        <div>
+                                            <label class="form-label fw-bold small text-muted text-uppercase">Report Date Balance <span class="text-danger">*</span></label>
+                                            <div class="input-group input-group-md">
+                                                <span class="input-group-text fw-bold text-primary">BDT</span>
+                                                <input type="text" inputmode="decimal" name="certificate_balance" id="inputCertBal" class="form-control font-monospace fw-bold @error('certificate_balance') is-invalid @enderror" value="{{ old('certificate_balance', $editVerification ? $editVerification->formatted_certificate_balance : ($activeVerification ? $activeVerification->formatted_certificate_balance : '')) }}" required>
+                                                @error('certificate_balance')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <small class="text-muted mt-1 d-block">Shown on Certificate verification</small>
                                         </div>
                                     </div>
                                 </div>
@@ -385,6 +385,15 @@
             });
         }
     });
+
+    // Auto-fill Certificate Section with Closing Balance
+    const closeBalInput = document.getElementById('inputCloseBal');
+    const certBalInput = document.getElementById('inputCertBal');
+    if (closeBalInput && certBalInput) {
+        closeBalInput.addEventListener('input', function() {
+            certBalInput.value = this.value;
+        });
+    }
 
     let currentCertUrl = document.getElementById('activeCertUrl')?.value || '';
     let currentStmtUrl = document.getElementById('activeStmtUrl')?.value || '';
