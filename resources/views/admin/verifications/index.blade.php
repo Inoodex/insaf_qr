@@ -485,7 +485,7 @@
 
         const canvasPad = document.createElement('div');
         canvasPad.style.background = '#ffffff';
-        canvasPad.style.padding = '8px';
+        canvasPad.style.padding = '0px';
         canvasPad.style.borderRadius = '8px';
         holder.appendChild(canvasPad);
 
@@ -498,7 +498,7 @@
                     height: 200,
                     type: "canvas",
                     data: payload,
-                    margin: 8,
+                    margin: 0,
                     qrOptions: { 
                         typeNumber: typeNum,
                         mode: 'Byte',
@@ -594,7 +594,7 @@
                     height: 600,
                     type: "canvas",
                     data: qrUrl,
-                    margin: 20,
+                    margin: 0,
                     qrOptions: { 
                         typeNumber: typeNum,
                         mode: 'Byte',
